@@ -6,7 +6,7 @@
 /*   By: soabbas <soabbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:20:51 by soabbas           #+#    #+#             */
-/*   Updated: 2022/11/15 11:13:05 by soabbas          ###   ########.fr       */
+/*   Updated: 2022/11/21 13:16:15 by soabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <string.h>
 
 typedef struct s_list
 {
@@ -33,9 +34,10 @@ void	print_list(t_list *lst);
 
 	/* ***********	parsing	*********** */
 
-int		comp_av(char **av);
-int		ft_strcmp(char *s1, char *s2);
 long long	ft_atoi(char *str);
+int		ft_strcmp(char *s1, char *s2);
+int		comp_av(char **av);
+int     ft_isdigit(char	*str);
 
 	/* **********	mouv	*********** */
 
@@ -53,7 +55,7 @@ void	algo3_part2(t_list **lst, char c);
 	/* ***********	algo_5	*********** */
 
 int		min_index(t_list *lst);
-void	push_min(t_list **lst_a, t_list **lst_b, char c);
+int		push_min(t_list **lst_a, t_list **lst_b, char c);
 void	algo_5(t_list **lst_a, t_list **lst_b, char c);
 
 	/* ***********	algo_100_500	*********** */
@@ -62,6 +64,10 @@ int		*tableau(t_list **lst);
 int		*sort_tab(int *tab, int size);
 int		return_mediane(int *tab, int size);
 int		max_index(t_list *lst);
-void	algo_100(t_list **lst_a, t_list **lst_b, char c);
+void	algo_100(t_list **lst_a, t_list **lst_b);
+void	push_max(t_list **lst_a, t_list **lst_b);
+int		push_min2(t_list **lst_a, t_list **lst_b, int mediane);
+
+t_list	*main2(int ac, t_list *lst_a);
 
 #endif

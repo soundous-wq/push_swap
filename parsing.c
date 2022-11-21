@@ -6,7 +6,7 @@
 /*   By: soabbas <soabbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 17:46:57 by soabbas           #+#    #+#             */
-/*   Updated: 2022/10/30 15:33:39 by soabbas          ###   ########.fr       */
+/*   Updated: 2022/11/17 18:50:36 by soabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,21 @@ int		comp_av(char **av)
 			y++;
 		}
 		i++;
+	}
+	return (1);
+}
+
+int     ft_isdigit(char	*str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else if (!(str[i] >= '0' && str[i] <= '9'))
+			return (0);
 	}
 	return (1);
 }

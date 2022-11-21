@@ -6,7 +6,7 @@
 /*   By: soabbas <soabbas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:42:59 by soabbas           #+#    #+#             */
-/*   Updated: 2022/11/15 12:08:03 by soabbas          ###   ########.fr       */
+/*   Updated: 2022/11/21 12:32:19 by soabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,56 +16,61 @@
 
 void	algo_3(t_list **lst, char c)
 {
-	t_list	**top;
 	t_list	*mid;
 	t_list	*bot;
 
-	top = malloc(sizeof(t_list));
-	*top = *lst;
+	bot = NULL;
 	mid = (*lst)->next;
-	bot = (*lst)->next->next;
-	(*top)->next = mid;
-	mid->next = bot;
-	bot->next = NULL;
-	if (((*top)->content < mid->content) && (mid->content > bot->content)
-		&& (bot->content > (*top)->content))
-	{
-		reverse_rotate(top, c);
-		swap(top, c);
+	if (mid->next)
+	{	
+		bot = mid->next;
+		bot->next = NULL;
+		mid->next = bot;
 	}
-	if (((*top)->content > mid->content) && (mid->content < bot->content)
-		&& (bot->content > (*top)->content))
-		swap(top, c);
-	if (((*top)->content < mid->content) && (mid->content > (*top)->content)
-		&& (bot->content < (*top)->content))
-		reverse_rotate(top, c);
-	*lst = (*top);
+	else if (!mid->next)
+	{
+		if ((*lst)->content > mid->content)
+			swap(lst, c);
+		return ;
+	}
+	(*lst)->next = mid;
+	mid->next = bot;
+	if (((*lst)->content < mid->content) && (mid->content > bot->content)
+		&& (bot->content > (*lst)->content))
+	{
+		reverse_rotate(lst, c);
+		swap(lst, c);
+	}
+	if (((*lst)->content > mid->content) && (mid->content < bot->content)
+		&& (bot->content > (*lst)->content))
+		swap(lst, c);
+	if (((*lst)->content < mid->content) && (mid->content > (*lst)->content)
+		&& (bot->content < (*lst)->content))
+		reverse_rotate(lst, c);
+	*lst = (*lst);
 	algo3_part2(lst, c);
 }
 
 void	algo3_part2(t_list **lst, char c)
 {
-	t_list	**top;
 	t_list	*mid;
 	t_list	*bot;
 
-	top = malloc(sizeof(t_list));
-	*top = *lst;
 	mid = (*lst)->next;
 	bot = (*lst)->next->next;
-	(*top)->next = mid;
+	(*lst)->next = mid;
 	mid->next = bot;
 	bot->next = NULL;
-	if (((*top)->content > mid->content) && (mid->content > bot->content)
-		&& (bot->content < (*top)->content))
+	if (((*lst)->content > mid->content) && (mid->content > bot->content)
+		&& (bot->content < (*lst)->content))
 	{
-		swap(top, c);
-		reverse_rotate(top, c);
+		swap(lst, c);
+		reverse_rotate(lst, c);
 	}
-	if (((*top)->content > mid->content) && (mid->content < bot->content)
-		&& (bot->content < (*top)->content))
-		rotate(top, c);
-	*lst = *top;
+	if (((*lst)->content > mid->content) && (mid->content < bot->content)
+		&& (bot->content < (*lst)->content))
+		rotate(lst, c);
+	*lst = *lst;
 }
 
 	/* ***** algo 5 ***** */
@@ -95,29 +100,36 @@ int	min_index(t_list *lst)
 	return (index);
 }
 
-void	push_min(t_list **lst_a, t_list **lst_b, char c)
+int		push_min(t_list **lst_a, t_list **lst_b, char c)
 {
 	int		index;
 	int		size;
+	int		size_tab;
 	
 	index = min_index(*lst_a);
 	size = ft_lstsize(*lst_a);
+	size_tab = ft_lstsize(*lst_a);
 	if (index < (size / 2))
 	{
-		while (index > 1)
+		while (index >= 1)
 		{	
 			rotate(lst_a, c);
 			index--;
 		}
 		push_b(lst_a, lst_b);
+		size_tab--;
 	}
 	else
-		while (index < size)
+	{
+		while (index <= size)
 		{
 			reverse_rotate(lst_a, c);
 			index++;
 		}
-	push_b(lst_a, lst_b);
+		push_b(lst_a, lst_b);
+		size_tab--;
+	}
+	return (size_tab);
 }
 
 void	algo_5(t_list **lst_a, t_list **lst_b, char c)
